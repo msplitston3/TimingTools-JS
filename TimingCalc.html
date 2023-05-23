@@ -55,6 +55,7 @@
     </div>
 </div>
     <script>
+        //Takes the time entered in hh:mm:ss.kkk time and converts it to milliseconds
         function convertTimeToMS(rawTime){
         let timeArr = rawTime.split(/[:.]/);
         let hoursInMS = timeArr[0] * 3600000;
@@ -63,6 +64,7 @@
         let timeInMS = Number(hoursInMS) + Number(minsInMS) + Number(secsInMS) + Number(timeArr[3]);
         return timeInMS;
     }
+    //Takes millisecond time and converts it to hh:mm:ss.kkk format
         function convertMSToTime(mSTime){
         let hours = Math.floor((mSTime) / 3600000);
         let mins = Math.floor(((mSTime) % 3600000) / 60000);
@@ -71,6 +73,7 @@
         return ((hours < 10) ? "0" + hours : hours) + ":"+ ((mins < 10) ? "0" + mins : mins) + 
         ":" + ((secs < 10) ? "0" + secs : secs) + "." + ((mS < 10) ? "00" + mS : (mS < 100) ? "0" + mS : mS);
     }
+    //Adds millisecond times together and then converts to hh:mm:ss.kkk to output
         function addTimes(){
             let gunTime = (convertTimeToMS(document.getElementById("gunTime").value) != null ? convertTimeToMS(document.getElementById("gunTime").value) : 0) ;
             let timeOne = (convertTimeToMS(document.getElementById("timeOne").value) != null ? convertTimeToMS(document.getElementById("timeOne").value) : 0) ;;
@@ -87,12 +90,5 @@
             timeFour + timeFive);
         
     }
-        function subTimes(timeOne, timeTwo){
-        return (timeOne > timeTwo) ? convertMSToTime(convertTimeToMS(timeOne) - convertTimeToMS(timeTwo)) :
-        convertMSToTime(convertTimeToMS(timeTwo) - convertTimeToMS(timeOne));
-    }
-        function myTest(){
-            document.getElementById("result").value = "test";
-        }
     </script>
 </body>
