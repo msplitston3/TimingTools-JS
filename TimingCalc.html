@@ -1,0 +1,96 @@
+<head>
+    <title>Timing Calculator</title>
+    <style>
+        .timeInput {
+            padding: 10px;
+        }
+        .optional {
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="header-container"><h3>Triathlon Calculator</h3></div>
+
+<div id="triCalculator">
+    <div class="timeInput">
+    <label for="gunTime">GunTime<br><span class="optional">optional</span></label>
+    <input id="gunTime" value="00:00:00.000"/>
+    </div>
+    <div class="timeInput">
+    <label for="timeOne">Time 1:</label>
+    <input id="timeOne" value="00:00:00.000"/>
+    <label for="timeOneResult"></label>
+    <input id="timeOneResult" value="00:00:00.000"/>
+    </div>
+    <div class="timeInput">
+    <label for="timeTwo">Time 2:</label>
+    <input id="timeTwo" value="00:00:00.000"/>
+    <label for="timeTwoResult"></label>
+    <input id="timeTwoResult" value="00:00:00.000"/>
+    </div>
+    <div class="timeInput">
+    <label for="timeThree">Time 3:</label>
+    <input id="timeThree" value="00:00:00.000"/>
+    <label for="timeThreeResult"></label>
+    <input id="timeThreeResult" value="00:00:00.000"/>
+    </div>
+    <div class="timeInput">
+    <label for="timeFour">Time 4:</label>
+    <input id="timeFour" value="00:00:00.000"/>
+    <label for="timeFourResult"></label>
+    <input id="timeFourResult" value="00:00:00.000"/>
+    </div>
+    <div class="timeInput">
+    <label for="timeFive">Time 5:</label>
+    <input id="timeFive" value="00:00:00.000"/>
+    <label for="timeFiveResult"></label>
+    <input id="timeFiveResult" value="00:00:00.000"/>
+    </div>
+    <div>
+    <button name="add" onClick="addTimes()">Add</button>
+    <input id="result">
+    </div>
+</div>
+    <script>
+        function convertTimeToMS(rawTime){
+        let timeArr = rawTime.split(/[:.]/);
+        let hoursInMS = timeArr[0] * 3600000;
+        let minsInMS = timeArr[1] * 60000;
+        let secsInMS = timeArr[2] * 1000;
+        let timeInMS = Number(hoursInMS) + Number(minsInMS) + Number(secsInMS) + Number(timeArr[3]);
+        return timeInMS;
+    }
+        function convertMSToTime(mSTime){
+        let hours = Math.floor((mSTime) / 3600000);
+        let mins = Math.floor(((mSTime) % 3600000) / 60000);
+        let secs = Math.floor(((mSTime % 3600000) % 60000) / 1000);
+        let mS = Math.floor(((mSTime % 3600000) % 60000) % 1000);
+        return ((hours < 10) ? "0" + hours : hours) + ":"+ ((mins < 10) ? "0" + mins : mins) + 
+        ":" + ((secs < 10) ? "0" + secs : secs) + "." + ((mS < 10) ? "00" + mS : (mS < 100) ? "0" + mS : mS);
+    }
+        function addTimes(){
+            let gunTime = (convertTimeToMS(document.getElementById("gunTime").value) != null ? convertTimeToMS(document.getElementById("gunTime").value) : 0) ;
+            let timeOne = (convertTimeToMS(document.getElementById("timeOne").value) != null ? convertTimeToMS(document.getElementById("timeOne").value) : 0) ;;
+            let timeTwo = (convertTimeToMS(document.getElementById("timeTwo").value) != null ? convertTimeToMS(document.getElementById("timeTwo").value) : 0) ;
+            let timeThree = (convertTimeToMS(document.getElementById("timeThree").value) != null ? convertTimeToMS(document.getElementById("timeThree").value) : 0) ;
+            let timeFour = (convertTimeToMS(document.getElementById("timeFour").value) != null ? convertTimeToMS(document.getElementById("timeFour").value) : 0) ;
+            let timeFive = (convertTimeToMS(document.getElementById("timeFive").value) != null ? convertTimeToMS(document.getElementById("timeFive").value) : 0) ;
+            document.getElementById("timeOneResult").value = convertMSToTime(gunTime + timeOne);
+            document.getElementById("timeTwoResult").value = convertMSToTime(gunTime + timeOne + timeTwo);
+            document.getElementById("timeThreeResult").value = convertMSToTime(gunTime + timeOne + timeTwo + timeThree);
+            document.getElementById("timeFourResult").value = convertMSToTime(gunTime + timeOne + timeTwo + timeThree + timeFour);
+            document.getElementById("timeFiveResult").value = convertMSToTime(gunTime + timeOne + timeTwo + timeThree + timeFour + timeFive);
+            document.getElementById("result").value = convertMSToTime(gunTime + timeOne + timeTwo + timeThree + 
+            timeFour + timeFive);
+        
+    }
+        function subTimes(timeOne, timeTwo){
+        return (timeOne > timeTwo) ? convertMSToTime(convertTimeToMS(timeOne) - convertTimeToMS(timeTwo)) :
+        convertMSToTime(convertTimeToMS(timeTwo) - convertTimeToMS(timeOne));
+    }
+        function myTest(){
+            document.getElementById("result").value = "test";
+        }
+    </script>
+</body>
